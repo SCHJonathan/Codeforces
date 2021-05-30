@@ -1,0 +1,9 @@
+# Apple
+**/.DS_Store
+
+# Codeforces input / output file
+**/in.txt
+**/out.txt
+
+# C++ compile binary
+**/a.out
