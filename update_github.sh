@@ -1,16 +1,19 @@
+# reset the git commit
+git reset
+
 # clean all the redundant file
 ccf
+
+# show the difference
+git --no-pager diff
 
 # git add all
 cd /Users/$USER/Desktop/codeforce
 git add .
-
-# print the status 
 git status
 
-# echo commit 
-read commit_msg
+read commit_msgs
 
-git commit -m "${commit_msg}"
+git commit -m "${commit_msgs}"
 
 git push origin master
