@@ -52,45 +52,66 @@ const int RANGE = 1e9+7;
 
 class Solution {
 public:
-    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
-        int res = 0;
 
-        return res % RANGE;
+    bool helper(vector<int>& nums) {
+        for (int i = 1; i < nums.size(); i++) {
+            debug(nums[i], nums[i-1]);
+            if (nums[i] <= nums[i-1]) {
+                debug("reach");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool canBeIncreasing(vector<int>& nums) {
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] <= nums[i-1]) {
+                vector<int> copy = nums;
+                copy.erase(copy.begin()+i);
+                debug(copy);
+                if (helper(copy)) return true;
+                copy = nums;
+                copy.erase(copy.begin()+(i-1));
+                debug(copy);
+                if (helper(copy)) return true;
+                return false;
+            }
+        }
+        return true;
     }
 };
-
 
 // END SUBMIT
 
 void test_example_0(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 2;
-    int _ret_ans = 60;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<int> nums = {1, 2, 10, 5, 7};
+    bool _ret_ans = true;
+    bool _ret = _sol.canBeIncreasing(nums);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
 
 void test_example_1(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 3;
-    int _ret_ans = 68;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<int> nums = {2, 3, 1, 2};
+    bool _ret_ans = false;
+    bool _ret = _sol.canBeIncreasing(nums);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
 
 void test_example_2(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 4;
-    int _ret_ans = 72;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<int> nums = {1, 1, 1};
+    bool _ret_ans = false;
+    bool _ret = _sol.canBeIncreasing(nums);
+    debug("Expected: ", _ret_ans, "My Answer: ", _ret);
+}
+
+
+void test_example_3(Solution &_sol) {
+    vector<int> nums = {1, 2, 3};
+    bool _ret_ans = true;
+    bool _ret = _sol.canBeIncreasing(nums);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
@@ -100,4 +121,5 @@ int main() {
     test_example_0(_sol);
     test_example_1(_sol);
     test_example_2(_sol);
+    test_example_3(_sol);
 }

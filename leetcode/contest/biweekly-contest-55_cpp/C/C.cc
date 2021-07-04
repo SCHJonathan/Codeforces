@@ -52,45 +52,48 @@ const int RANGE = 1e9+7;
 
 class Solution {
 public:
-    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
-        int res = 0;
-
-        return res % RANGE;
+    long long maxAlternatingSum(vector<int>& nums) {
+        ll result = 0;
+        int n = nums.size(); if (n == 1) return nums[0];
+        int i = 1, left = 0;
+        while (i < n) {
+            // first find strict decrease
+            while (i < n && nums[i] >= nums[i-1]) {
+                i++;
+            }
+            result += nums[max(i-1, left)];
+            // then find strict increase
+            while (i < n && nums[i] <= nums[i-1]) {
+                i++;
+            }
+            if (i < n) result -= nums[i-1];
+        }
+        return result;
     }
 };
-
 
 // END SUBMIT
 
 void test_example_0(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 2;
-    int _ret_ans = 60;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<int> nums = {4, 2, 5, 3};
+    long long _ret_ans = 7;
+    long long _ret = _sol.maxAlternatingSum(nums);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
 
 void test_example_1(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 3;
-    int _ret_ans = 68;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<int> nums = {5, 6, 7, 8};
+    long long _ret_ans = 8;
+    long long _ret = _sol.maxAlternatingSum(nums);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
 
 void test_example_2(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 4;
-    int _ret_ans = 72;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<int> nums = {6, 2, 1, 2, 4, 5};
+    long long _ret_ans = 10;
+    long long _ret = _sol.maxAlternatingSum(nums);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 

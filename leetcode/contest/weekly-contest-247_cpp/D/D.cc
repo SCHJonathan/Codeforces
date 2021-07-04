@@ -52,45 +52,25 @@ const int RANGE = 1e9+7;
 
 class Solution {
 public:
-    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
-        int res = 0;
-
-        return res % RANGE;
+    int waysToBuildRooms(vector<int>& prevRoom) {
+        
     }
 };
-
 
 // END SUBMIT
 
 void test_example_0(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 2;
-    int _ret_ans = 60;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<int> prevRoom = {-1, 0, 1};
+    int _ret_ans = 1;
+    int _ret = _sol.waysToBuildRooms(prevRoom);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
 
 void test_example_1(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 3;
-    int _ret_ans = 68;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
-    debug("Expected: ", _ret_ans, "My Answer: ", _ret);
-}
-
-
-void test_example_2(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 4;
-    int _ret_ans = 72;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<int> prevRoom = {-1, 0, 0, 1, 2};
+    int _ret_ans = 6;
+    int _ret = _sol.waysToBuildRooms(prevRoom);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
@@ -99,5 +79,4 @@ int main() {
     Solution _sol;
     test_example_0(_sol);
     test_example_1(_sol);
-    test_example_2(_sol);
 }

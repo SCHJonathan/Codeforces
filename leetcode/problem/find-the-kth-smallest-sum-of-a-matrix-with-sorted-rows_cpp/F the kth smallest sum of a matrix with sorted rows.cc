@@ -52,10 +52,39 @@ const int RANGE = 1e9+7;
 
 class Solution {
 public:
-    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
-        int res = 0;
+    int kthSmallest(vector<vector<int>>& mat, int k) {
+        set<vector<int>> visited;
+        pair<int, vector<int>> pr;
+        int m = mat.size(), n = mat[0].size(), currSum =0;
+        vector<int> v(m, 0);
+        for(int i = 0; i < m; i++)
+            currSum += mat[i][0];
+        pr = {currSum, v};
 
-        return res % RANGE;
+        visited.insert(v);
+        priority_queue<pair<int, vector<int>>, vector<pair<int, vector<int>>>, greater<pair<int, vector<int>>>> pq;
+        pq.push(pr);
+
+
+        while(k) {
+            auto [sum, vec] = pq.top();
+            pq.pop();
+            currSum=sum;
+            for(int i = 0; i < m; i++) {
+                int rowidx = i;
+                int colidx = vec[i];
+                if(colidx < n - 1) {
+                    vec[i]++;
+                    if(!visited.count(vec)){
+                        pq.push({sum-mat[rowidx][colidx]+mat[rowidx][colidx+1],vec});
+                        visited.insert(vec);
+                    }
+                    vec[i]--;
+                }
+            }
+            k--;
+        }
+        return currSum;
     }
 };
 
@@ -63,34 +92,37 @@ public:
 // END SUBMIT
 
 void test_example_0(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 2;
-    int _ret_ans = 60;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<vector<int>> mat = {{1, 3, 11}, {2, 4, 6}};
+    int k = 5;
+    int _ret_ans = 7;
+    int _ret = _sol.kthSmallest(mat, k);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
 
 void test_example_1(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 3;
-    int _ret_ans = 68;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<vector<int>> mat = {{1, 3, 11}, {2, 4, 6}};
+    int k = 9;
+    int _ret_ans = 17;
+    int _ret = _sol.kthSmallest(mat, k);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
 
 void test_example_2(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 4;
-    int _ret_ans = 72;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
+    vector<vector<int>> mat = {{1, 10, 10}, {1, 4, 5}, {2, 3, 6}};
+    int k = 7;
+    int _ret_ans = 9;
+    int _ret = _sol.kthSmallest(mat, k);
+    debug("Expected: ", _ret_ans, "My Answer: ", _ret);
+}
+
+
+void test_example_3(Solution &_sol) {
+    vector<vector<int>> mat = {{1, 1, 10}, {2, 2, 9}};
+    int k = 7;
+    int _ret_ans = 12;
+    int _ret = _sol.kthSmallest(mat, k);
     debug("Expected: ", _ret_ans, "My Answer: ", _ret);
 }
 
@@ -100,4 +132,5 @@ int main() {
     test_example_0(_sol);
     test_example_1(_sol);
     test_example_2(_sol);
+    test_example_3(_sol);
 }

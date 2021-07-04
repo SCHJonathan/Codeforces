@@ -50,54 +50,39 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 
 const int RANGE = 1e9+7;
 
-class Solution {
+class MovieRentingSystem {
 public:
-    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
-        int res = 0;
-
-        return res % RANGE;
+    MovieRentingSystem(int n, vector<vector<int>>& entries) {
+          
+    }
+    
+    vector<int> search(int movie) {
+        
+    }
+    
+    void rent(int shop, int movie) {
+        
+    }
+    
+    void drop(int shop, int movie) {
+        
+    }
+    
+    vector<vector<int>> report() {
+        
     }
 };
 
+/**
+ * Your MovieRentingSystem object will be instantiated and called as such:
+ * MovieRentingSystem* obj = new MovieRentingSystem(n, entries);
+ * vector<int> param_1 = obj->search(movie);
+ * obj->rent(shop,movie);
+ * obj->drop(shop,movie);
+ * vector<vector<int>> param_4 = obj->report();
+ */
 
 // END SUBMIT
 
-void test_example_0(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 2;
-    int _ret_ans = 60;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
-    debug("Expected: ", _ret_ans, "My Answer: ", _ret);
-}
-
-
-void test_example_1(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 3;
-    int _ret_ans = 68;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
-    debug("Expected: ", _ret_ans, "My Answer: ", _ret);
-}
-
-
-void test_example_2(Solution &_sol) {
-    int n = 6;
-    vector<int> speed = {2, 10, 3, 1, 5, 8};
-    vector<int> efficiency = {5, 4, 3, 9, 7, 2};
-    int k = 4;
-    int _ret_ans = 72;
-    int _ret = _sol.maxPerformance(n, speed, efficiency, k);
-    debug("Expected: ", _ret_ans, "My Answer: ", _ret);
-}
-
-
 int main() {
-    Solution _sol;
-    test_example_0(_sol);
-    test_example_1(_sol);
-    test_example_2(_sol);
 }
