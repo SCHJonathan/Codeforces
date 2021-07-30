@@ -61,28 +61,51 @@ const int RANGE = 1e9+7;
 
 class Solution {
 public:
-    vector<int> canSeePersonsCount(vector<int>& heights) {
-        int n = heights.size();
-        
-        return {};
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int m = mat.size(), n = mat[0].size();
+        vector<vector<int>> res = mat;
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
+                if (mat[i][j] == 1) res[i][j] = INT_MAX;
+        bool changed = false;
+        do {
+            changed = false;
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (mat[i][j] == 0) continue;
+                    int top = i > 0 ? res[i-1][j] : INT_MAX;
+                    int left = j > 0 ? res[i][j-1] : INT_MAX;
+                    int below = i < m-1 ? res[i+1][j] : INT_MAX;
+                    int right = j < n-1 ? res[i][j+1] : INT_MAX;
+                    int before = res[i][j];
+                    debug(top, left, below, right);
+                    debug(res);
+                    res[i][j] = min(top, min(left, min(below, right)));
+                    if (res[i][j] != INT_MAX) res[i][j]++;
+                    debug(before, res[i][j]);
+                    if (before != res[i][j]) changed = true;
+                }
+            }    
+        } while (changed);
+
+        return res;
     }
 };
-
 
 // END SUBMIT
 
 void test_example_0(Solution &_sol) {
-    vector<int> heights = {10, 6, 8, 5, 11, 9};
-    vector<int> _ret_ans = {3, 1, 2, 1, 1, 0};
-    vector<int> _ret = _sol.canSeePersonsCount(heights);
+    vector<vector<int>> mat = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+    vector<vector<int>> _ret_ans = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+    vector<vector<int>> _ret = _sol.updateMatrix(mat);
     test("Example - 0", _ret_ans, _ret);
 }
 
 
 void test_example_1(Solution &_sol) {
-    vector<int> heights = {5, 1, 2, 3, 10};
-    vector<int> _ret_ans = {4, 1, 1, 1, 0};
-    vector<int> _ret = _sol.canSeePersonsCount(heights);
+    vector<vector<int>> mat = {{0, 0, 0}, {0, 1, 0}, {1, 1, 1}};
+    vector<vector<int>> _ret_ans = {{0, 0, 0}, {0, 1, 0}, {1, 2, 1}};
+    vector<vector<int>> _ret = _sol.updateMatrix(mat);
     test("Example - 1", _ret_ans, _ret);
 }
 
