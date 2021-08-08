@@ -1,0 +1,2 @@
+#!/bin/sh
+python3 tools/leetcode-contest-helper/main.py login yuhengc2
