@@ -1,2 +1,2 @@
 #!/bin/sh
-python3 /Users/jonathanchang/Desktop/codeforce/leetcode/tools/leetcode-contest-helper/main.py getp -l cpp -o /Users/jonathanchang/Desktop/codeforce/leetcode/problem $@
+python3 $(pwd)/tools/leetcode-contest-helper/main.py getp -l cpp -o $(pwd)/problem $@
