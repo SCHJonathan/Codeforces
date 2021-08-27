@@ -35,13 +35,7 @@ public:
     int numOfStrings(vector<string>& patterns, string word) {
         int res = 0;
         for (auto& p : patterns) {
-            if (isSubstr(p, word)) {
-                debug(p, word, "OK");
-                res++;
-            } else {
-                debug(p, word, "NO");
-
-            }
+            if (isSubstr(p, word)) res++;
         }
         return res;
     }

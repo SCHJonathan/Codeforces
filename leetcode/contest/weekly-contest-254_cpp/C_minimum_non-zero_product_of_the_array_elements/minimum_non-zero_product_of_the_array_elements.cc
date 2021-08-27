@@ -23,19 +23,13 @@ class Solution {
 public:
     int minNonZeroProduct(int p) {
         ull curr = 1, parts = 1;
-        vector<int> powArr(p+1, 0); powArr[0] = 1;
 
+        vector<int> powArr(p+1, 0); powArr[0] = 1;
         for (int i = 1; i <= p; i++) powArr[i] = (powArr[i-1]*2)%RANGE;
         
-        ull res = 0;
         ull base = ((powArr[p-1]-1+RANGE)%RANGE)*2%RANGE;
-        parts = (parts << p) - 1;
+        parts = (1<<p) - 1;
         ull power = (parts/2)%RANGE;
-        // unordered_map<ull, ull> dp; dp[0] = 1; dp[1] = base; 
-        // for (int i = 2; i <= power; i++) {
-            // dp[i] = dp[i/2]*dp[i-i/2]%RANGE;
-        // }
-        curr = 1;
         vector<ull> dp(63, 0); dp[0] = base;
         for (int i = 1; i < 63; i++) dp[i] = dp[i-1]*dp[i-1]%RANGE;
         int idx = 0;
