@@ -36,7 +36,7 @@ public:
             auto [lx, ly] = q.front(); q.pop();
             for (int i = 0; i < 4; i++) {
                 int xx = lx+xdir[i], yy = ly+ydir[i];
-                if (xx < 0 || xx >= m || yy < 0 || yy >= n || grid[xx][yy] == '#' || grid[xx][yy] == 'B' || visited[xx][yy] || (xx == bx && yy == by)) continue;
+                if (xx < 0 || xx >= m || yy < 0 || yy >= n || grid[xx][yy] == '#' || visited[xx][yy] || (xx == bx && yy == by)) continue;
                 visited[xx][yy] = true;
                 q.push({xx, yy});
             }
@@ -87,8 +87,8 @@ public:
                 if (x == targetX && y == targetY) return step;
                 int px = dir == -1 ? playerX : x+xdir[dir];
                 int py = dir == -1 ? playerY : y+ydir[dir];
-                debug(x, y, px, py, dirstr);
                 auto dirs = directions(x, y, px, py, grid);
+                debug(x, y, px, py, dirstr, dirs);
                 for (auto [nbx, nby, nd] :dirs) {
                     if (visited[nbx][nby][nd]) continue;
                     string ndirstr = nd == -1 ? "init" : dirStr[nd];
@@ -96,6 +96,8 @@ public:
                     visited[nbx][nby][nd] = true;
                     q.push({nbx, nby, nd});
                 }
+                debug("pop", x, y, px, py, dirstr);
+
             }
             step++;
         }
@@ -144,12 +146,20 @@ void test_example_4(Solution &_sol) {
     test("Example - 4", _ret_ans, _ret);
 }
 
+void test_example_5(Solution &_sol) {
+    vector<vector<char>> grid = {{'#','#','#','#','#','#'},{'#','T','#','#','#','#'},{'#','.','.','B','.','#'},{'#','.','#','#','.','#'},{'#','.','.','.','S','#'},{'#','#','#','#','#','#'}};
+    int _ret_ans = 3;
+    int _ret = _sol.minPushBox(grid);
+    test("Example - 5", _ret_ans, _ret);
+}
+
 
 int main() {
     Solution _sol;
-    // test_example_0(_sol);
-    // test_example_1(_sol);
-    // test_example_2(_sol);
-    // test_example_3(_sol);
+    test_example_0(_sol);
+    test_example_1(_sol);
+    test_example_2(_sol);
+    test_example_3(_sol);
     test_example_4(_sol);
+    test_example_5(_sol);
 }
