@@ -43,7 +43,7 @@ public:
         weight[x] *= value;
     }
     
-    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+    vector<double> calcEquationUnionFind(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
         unordered_map<string, double> weight;
         unordered_map<string, string> disjointSet;
         
@@ -81,6 +81,50 @@ public:
                 debug(query, weight[divident], weight[divisor]);
                 // result.push_back(weight[divident]/weight[divisor]);
                 result.push_back(dividentWeight/divisorWeight);
+            }
+        }
+        return result;
+    }
+
+    bool existKey(unordered_map<string, unordered_map<string, double>>& relationship, string x, string y) {
+        return relationship.find(x) != relationship.end() && relationship[x].find(y) != relationship[x].end();
+    } 
+
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        unordered_set<string> numbersSet;
+        unordered_map<string, unordered_map<string, double>> relationship;
+        for (int i = 0; i < equations.size(); i++) {
+            double quotient = values[i];
+            string divident = equations[i][0], divisor = equations[i][1];
+            relationship[divident][divisor] = quotient;
+            relationship[divisor][divident] = 1.0/quotient;
+            relationship[divident][divident] = 1.0;
+            relationship[divisor][divisor] = 1.0;
+            numbersSet.insert(divident);
+            numbersSet.insert(divisor);
+        }
+
+        int n = numbersSet.size();
+        vector<string> numbers(numbersSet.begin(), numbersSet.end());
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (existKey(relationship, numbers[i], numbers[j])) {
+                        continue;
+                    }
+                    if (existKey(relationship, numbers[i], numbers[k]) && existKey(relationship, numbers[k], numbers[j])) {
+                        relationship[numbers[i]][numbers[j]] = relationship[numbers[i]][numbers[k]]*relationship[numbers[k]][numbers[j]];
+                    }
+                }
+            }
+        }
+        vector<double> result;
+        for (auto& query: queries) {
+            string divident = query[0], divisor = query[1];
+            if (existKey(relationship, divident, divisor)) {
+                result.push_back(relationship[divident][divisor]);
+            } else {
+                result.push_back(-1.0);
             }
         }
         return result;
@@ -169,7 +213,7 @@ int main() {
     // test_example_0(_sol);
     // test_example_1(_sol);
     // test_example_2(_sol);
-    // test_example_3(_sol);
+    test_example_3(_sol);
     // test_example_4(_sol);
-    test_example_5(_sol);
+    // test_example_5(_sol);
 }
